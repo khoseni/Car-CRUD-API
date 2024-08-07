@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nissan Count from Malmesbury</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+  <!--<link rel="stylesheet" href="styles.css"> -->
+  <script src="./app.js"></script>
+
+</head>
+
+<body x-data="nissan" x-init="fetchVehicles()">
+  <div class="p-4" >
+    <h1>Nissan Count from Malmesbury</h1>
+    <button @click="fetchNissanCount" class="p-2 bg-blue-500 text-white">Nissan Count</button>
+    <div x-show="nissanCount !== null">
+      <h2>This are the findings: <span x-text="nissanCount"></span></h2>
+    </div>
+  </div>
+
+  <div x-data="vehicleApp()" x-init="fetchVehicles()">
+    <h1 class="text-xl font-bold mb-4">Vehicle Management</h1>
+
+    <!-- Add Vehicle Form -->
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold">Add Vehicle</h2>
+        <form @submit.prevent="addVehicle">
+            <input type="text" x-model="newVehicle.color" placeholder="Color" required class="border p-1 mb-2"/>
+            <input type="text" x-model="newVehicle.make" placeholder="Make" required class="border p-1 mb-2"/>
+            <input type="text" x-model="newVehicle.model" placeholder="Model" required class="border p-1 mb-2"/>
+            <input type="text" x-model="newVehicle.reg_number" placeholder="Registration Number" required class="border p-1 mb-2"/>
+            <button type="submit" class="bg-blue-500 text-white p-2">Add Vehicle</button>
+        </form>
+    </div>
+
+    <!-- Delete Vehicle Form -->
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold">Delete Vehicle</h2>
+        <form @submit.prevent="deleteVehicle">
+            <input type="text" x-model="deleteRegNumber" placeholder="Registration Number to delete" required class="border p-1 mb-2"/>
+            <button type="submit" class="bg-red-500 text-white p-2">Delete Vehicle</button>
+        </form>
+    </div>
+
+    <!-- Vehicle List -->
+    <div>
+        <h2 class="text-lg font-semibold">Vehicle List</h2>
+        <ul>
+            <template x-for="vehicle in vehicles" :key="vehicle.reg_number">
+                <li>
+                    <strong x-text="`${vehicle.make} ${vehicle.model}`"></strong> 
+                    - <span x-text="vehicle.reg_number"></span> 
+                    (Color: <span x-text="vehicle.color"></span>)
+                </li>
+            </template>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>
